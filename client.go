@@ -76,7 +76,10 @@ func Keepalive() func(*Client) error {
 					break
 				}
 			}
-			c.connected = false
+
+			if c.connected {
+				c.connected = false
+			}
 		}(c)
 		return nil
 	}
@@ -185,7 +188,10 @@ func (c *Client) messageHandler() {
 		}
 	}
 
-	c.connected = false
+	if c.connected {
+		c.connected = false
+	}
+
 	c.err <- c.scanErr()
 }
 
